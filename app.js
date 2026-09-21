@@ -72,7 +72,7 @@ function renderCity(city) {
     <div class="spot">
       <span class="price">${s.price}</span>
       <div>
-        <div class="spot__name">${s.fav ? '<span class="fav">★</span> ' : ""}${s.name}</div>
+        <div class="spot__name">${s.fav ? '<span class="fav">❤️</span> ' : ""}${s.name}</div>
         <div class="spot__note">${s.note}</div>
       </div>
     </div>`;
@@ -80,29 +80,29 @@ function renderCity(city) {
   panelContent.innerHTML = `
     <h2 class="city-name">${city.name}</h2>
     <p class="city-tagline">${city.tagline}</p>
-    <span class="city-season">${city.bestSeason}</span>
+    <span class="city-season">🗓️ ${city.bestSeason}</span>
 
     <div class="stats">
-      <div class="stat"><div class="stat__label">Расстояние</div><div class="stat__value">${city.distanceKm} <small>км</small></div></div>
-      <div class="stat"><div class="stat__label">В пути</div><div class="stat__value">${city.driveTime}</div></div>
-      <div class="stat"><div class="stat__label">Топливо</div><div class="stat__value">${fmtRub(city.fuelCostRub)} <small>в одну сторону</small></div></div>
-      <div class="stat"><div class="stat__label">Платные дороги</div><div class="stat__value">${toll}</div></div>
+      <div class="stat"><div class="stat__label">🚗 Расстояние</div><div class="stat__value">${city.distanceKm} <small>км</small></div></div>
+      <div class="stat"><div class="stat__label">🕐 В пути</div><div class="stat__value">${city.driveTime}</div></div>
+      <div class="stat"><div class="stat__label">⛽ Топливо</div><div class="stat__value">${fmtRub(city.fuelCostRub)} <small>в одну сторону</small></div></div>
+      <div class="stat"><div class="stat__label">🛣️ Платные дороги</div><div class="stat__value">${toll}</div></div>
     </div>
 
     <div class="section">
-      <div class="section__title">Что посмотреть</div>
+      <div class="section__title">📍 Что посмотреть</div>
       ${city.places.map(placeRow).join("")}
     </div>
     <div class="section">
-      <div class="section__title">Где поесть</div>
+      <div class="section__title">🍽️ Где поесть</div>
       ${city.restaurants.map(spotRow).join("")}
     </div>
     <div class="section">
-      <div class="section__title">Бары</div>
+      <div class="section__title">🍸 Бары</div>
       ${city.bars.map(spotRow).join("")}
     </div>
 
-    <p class="disclaimer">Итого на дорогу туда: ${fmtRub(total)} (топливо${city.tollCostRub ? " + платные участки" : ""}). Топливо: 8 л/100 км × 80 ₽/л. Цены и сборы — ориентировочные, проверяй перед выездом.</p>
+    <p class="disclaimer">💸 Итого на дорогу туда: ${fmtRub(total)} (топливо${city.tollCostRub ? " + платные участки" : ""}). Топливо: 8 л/100 км × 80 ₽/л. Цены и сборы — ориентировочные, проверяй перед выездом.</p>
   `;
   panel.classList.add("is-open");
   panel.setAttribute("aria-hidden", "false");
@@ -148,14 +148,18 @@ function showRoute(city) {
     if (raw < 1) animFrame = requestAnimationFrame(step);
   };
 
-  // Плавный перелёт к рамке маршрута
+  // Плавный перелёт к рамке маршрута (на мобильном панель снизу — оставляем место под неё)
   const lons = coords.map((c) => c[0]), lats = coords.map((c) => c[1]);
+  const isMobile = innerWidth <= 560;
+  const padding = isMobile
+    ? { top: 90, bottom: Math.round(innerHeight * 0.56), left: 36, right: 36 }
+    : { top: 80, bottom: 80, left: 80, right: Math.min(500, innerWidth * 0.45) };
   map.fitBounds(
     [
       [Math.min(...lons), Math.min(...lats)],
       [Math.max(...lons), Math.max(...lats)],
     ],
-    { padding: { top: 80, bottom: 80, left: 80, right: Math.min(500, innerWidth * 0.45) }, duration: 1200 }
+    { padding, duration: 1200 }
   );
   animFrame = requestAnimationFrame(step);
 }
