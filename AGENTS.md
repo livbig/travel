@@ -12,6 +12,7 @@
 - Репозиторий **публичный**: https://github.com/livbig/travel (ветка `main`).
 - Прод — GitHub Pages: https://livbig.github.io/travel/ (`.nojekyll` отключает обработку Jekyll).
 - Сборки нет: что лежит в `main`, то и публикуется.
+- Состояние на сейчас — [`docs/PROJECT-STATE.md`](docs/PROJECT-STATE.md).
 
 ## 1. Файлы
 
