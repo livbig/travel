@@ -187,7 +187,7 @@ map.on("load", () => {
   // Дом
   const homeEl = document.createElement("div");
   homeEl.className = "marker marker--home";
-  homeEl.innerHTML = `<span class="marker__label">Мы здесь — Подольск</span>`;
+  homeEl.innerHTML = `<span class="marker__label">Старт — Подольск</span>`;
   new maplibregl.Marker({ element: homeEl }).setLngLat(HOME.coords).addTo(map);
 
   // Города
